@@ -1,0 +1,66 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v1.1",
+    "signature": "88cfeea52de5f1a168f1cee7b9a138fede165b36"
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v1.1": {
+      "democonsole/1.0.0": {
+        "dependencies": {
+          "NNeuron": "1.0.0"
+        },
+        "runtime": {
+          "DemoConsole.dll": {}
+        }
+      },
+      "autodiff/1.0.2": {
+        "dependencies": {
+          "System.Diagnostics.Contracts": "4.0.1"
+        },
+        "runtime": {
+          "lib/netstandard1.4/AutoDiff.dll": {}
+        }
+      },
+      "system.diagnostics.contracts/4.0.1": {
+        "runtime": {
+          "lib/netstandard1.0/System.Diagnostics.Contracts.dll": {}
+        }
+      },
+      "nneuron/1.0.0": {
+        "dependencies": {
+          "AutoDiff": "1.0.2"
+        },
+        "runtime": {
+          "NNeuron.dll": {}
+        }
+      }
+    }
+  },
+  "libraries": {
+    "democonsole/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "autodiff/1.0.2": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-Jwj6eoDqwJUHDE+Tg060RVPSm845fhboaw4UhSVPJXou4e2PX43JDshY3aVlbLMKg1LT2q6hkkJKj7XlsuZ+kw==",
+      "path": "autodiff/1.0.2",
+      "hashPath": "autodiff.1.0.2.nupkg.sha512"
+    },
+    "system.diagnostics.contracts/4.0.1": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-HvQQjy712vnlpPxaloZYkuE78Gn353L0SJLJVeLcNASeg9c4qla2a1Xq8I7B3jZoDzKPtHTkyVO7AZ5tpeQGuA==",
+      "path": "system.diagnostics.contracts/4.0.1",
+      "hashPath": "system.diagnostics.contracts.4.0.1.nupkg.sha512"
+    },
+    "nneuron/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    }
+  }
+}

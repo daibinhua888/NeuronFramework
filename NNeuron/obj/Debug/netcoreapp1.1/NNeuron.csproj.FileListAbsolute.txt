@@ -1,0 +1,7 @@
+d:\documents\visual studio 2017\Projects\NeuronFramework\NNeuron\bin\Debug\netcoreapp1.1\NNeuron.deps.json
+d:\documents\visual studio 2017\Projects\NeuronFramework\NNeuron\bin\Debug\netcoreapp1.1\NNeuron.dll
+d:\documents\visual studio 2017\Projects\NeuronFramework\NNeuron\bin\Debug\netcoreapp1.1\NNeuron.pdb
+d:\documents\visual studio 2017\Projects\NeuronFramework\NNeuron\obj\Debug\netcoreapp1.1\NNeuron.AssemblyInfo.cs
+d:\documents\visual studio 2017\Projects\NeuronFramework\NNeuron\obj\Debug\netcoreapp1.1\NNeuron.dll
+d:\documents\visual studio 2017\Projects\NeuronFramework\NNeuron\obj\Debug\netcoreapp1.1\NNeuron.pdb
+d:\documents\visual studio 2017\Projects\NeuronFramework\NNeuron\obj\Debug\netcoreapp1.1\NNeuron.csprojResolveAssemblyReference.cache

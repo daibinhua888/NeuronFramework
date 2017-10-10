@@ -1,0 +1,5 @@
+d:\documents\visual studio 2017\Projects\NeuronFramework\NFramework\bin\Debug\NFramework.dll
+d:\documents\visual studio 2017\Projects\NeuronFramework\NFramework\bin\Debug\NFramework.pdb
+d:\documents\visual studio 2017\Projects\NeuronFramework\NFramework\obj\Debug\NFramework.csprojResolveAssemblyReference.cache
+d:\documents\visual studio 2017\Projects\NeuronFramework\NFramework\obj\Debug\NFramework.dll
+d:\documents\visual studio 2017\Projects\NeuronFramework\NFramework\obj\Debug\NFramework.pdb
