@@ -1,0 +1,8 @@
+d:\documents\visual studio 2017\Projects\NeuronFramework\NeuronFramework\bin\Debug\NeuronConsole.exe.config
+d:\documents\visual studio 2017\Projects\NeuronFramework\NeuronFramework\bin\Debug\NeuronConsole.exe
+d:\documents\visual studio 2017\Projects\NeuronFramework\NeuronFramework\bin\Debug\NeuronConsole.pdb
+d:\documents\visual studio 2017\Projects\NeuronFramework\NeuronFramework\bin\Debug\NFramework.dll
+d:\documents\visual studio 2017\Projects\NeuronFramework\NeuronFramework\bin\Debug\NFramework.pdb
+d:\documents\visual studio 2017\Projects\NeuronFramework\NeuronFramework\obj\Debug\NeuronConsole.csprojResolveAssemblyReference.cache
+d:\documents\visual studio 2017\Projects\NeuronFramework\NeuronFramework\obj\Debug\NeuronConsole.exe
+d:\documents\visual studio 2017\Projects\NeuronFramework\NeuronFramework\obj\Debug\NeuronConsole.pdb
