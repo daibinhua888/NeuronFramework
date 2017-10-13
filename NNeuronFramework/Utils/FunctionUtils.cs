@@ -52,11 +52,7 @@ namespace NNeuronFramework.Utils
                 sum += Math.Pow(Math.E, x);
 
             foreach (var x in xs)
-            {
-                var x_output= Math.Pow(Math.E, x);
-
-                outputs.Add(x_output);
-            }
+                outputs.Add(Math.Pow(Math.E, x)/ sum);
 
             return outputs.ToArray();
         }

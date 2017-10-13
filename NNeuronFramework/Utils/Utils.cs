@@ -31,5 +31,18 @@ namespace NNeuronFramework.Utils
                 Console.WriteLine();
             }
         }
+
+        public static void DisplayListList(List<double> x)
+        {
+            if (x == null)
+                return;
+
+            foreach (var vector in x)
+            {
+                Console.Write(vector);
+                Console.Write(",");
+            }
+            Console.WriteLine();
+        }
     }
 }
