@@ -2267,12 +2267,8 @@
           "lib/netstandard1.3/System.Xml.XPath.XDocument.dll": {}
         }
       },
-      "NNeuron/1.0.0": {
-        "type": "project",
-        "framework": ".NETCoreApp,Version=v1.1",
-        "dependencies": {
-          "Microsoft.NETCore.App": "1.1.2"
-        }
+      "NNeuronFramework/1.0.0": {
+        "type": "project"
       }
     }
   },
@@ -7037,16 +7033,16 @@
         "system.xml.xpath.xdocument.nuspec"
       ]
     },
-    "NNeuron/1.0.0": {
+    "NNeuronFramework/1.0.0": {
       "type": "project",
-      "path": "../NNeuron/NNeuron.csproj",
-      "msbuildProject": "../NNeuron/NNeuron.csproj"
+      "path": "../NNeuronFramework/NNeuronFramework.csproj",
+      "msbuildProject": "../NNeuronFramework/NNeuronFramework.csproj"
     }
   },
   "projectFileDependencyGroups": {
     ".NETCoreApp,Version=v1.1": [
       "Microsoft.NETCore.App >= 1.1.2",
-      "NNeuron >= 1.0.0"
+      "NNeuronFramework >= 1.0.0"
     ]
   },
   "packageFolders": {
@@ -7066,8 +7062,8 @@
       "frameworks": {
         "netcoreapp1.1": {
           "projectReferences": {
-            "D:\\Documents\\Visual Studio 2017\\Projects\\NeuronFramework\\NeuronFramework\\NNeuron\\NNeuron.csproj": {
-              "projectPath": "D:\\Documents\\Visual Studio 2017\\Projects\\NeuronFramework\\NeuronFramework\\NNeuron\\NNeuron.csproj"
+            "D:\\Documents\\Visual Studio 2017\\Projects\\NeuronFramework\\NeuronFramework\\NNeuronFramework\\NNeuronFramework.csproj": {
+              "projectPath": "D:\\Documents\\Visual Studio 2017\\Projects\\NeuronFramework\\NeuronFramework\\NNeuronFramework\\NNeuronFramework.csproj"
             }
           }
         }

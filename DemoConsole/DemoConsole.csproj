@@ -6,7 +6,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\NNeuron\NNeuron.csproj" />
+    <ProjectReference Include="..\NNeuronFramework\NNeuronFramework.csproj" />
   </ItemGroup>
 
 </Project>

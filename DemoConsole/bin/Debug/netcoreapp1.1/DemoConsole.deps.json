@@ -8,15 +8,15 @@
     ".NETCoreApp,Version=v1.1": {
       "democonsole/1.0.0": {
         "dependencies": {
-          "NNeuron": "1.0.0"
+          "NNeuronFramework": "1.0.0"
         },
         "runtime": {
           "DemoConsole.dll": {}
         }
       },
-      "nneuron/1.0.0": {
+      "nneuronframework/1.0.0": {
         "runtime": {
-          "NNeuron.dll": {}
+          "NNeuronFramework.dll": {}
         }
       }
     }
@@ -27,7 +27,7 @@
       "serviceable": false,
       "sha512": ""
     },
-    "nneuron/1.0.0": {
+    "nneuronframework/1.0.0": {
       "type": "project",
       "serviceable": false,
       "sha512": ""
