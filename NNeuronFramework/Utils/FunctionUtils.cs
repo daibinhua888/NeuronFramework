@@ -42,12 +42,23 @@ namespace NNeuronFramework.Utils
             return (Math.Exp(x)- Math.Exp(-x)) / (Math.Exp(x) + Math.Exp(-x));
         }
 
-        //public static double[] SoftMax(double[] xs)
-        //{
-        //    var outputs = new List<double>();
-        //    foreach (var x in xs)
-        //    {
-        //    }
-        //}
+        public static double[] SoftMax(double[] xs)
+        {
+            var outputs = new List<double>();
+
+            double sum = 0;
+
+            foreach (var x in xs)
+                sum += Math.Pow(Math.E, x);
+
+            foreach (var x in xs)
+            {
+                var x_output= Math.Pow(Math.E, x);
+
+                outputs.Add(x_output);
+            }
+
+            return outputs.ToArray();
+        }
     }
 }
