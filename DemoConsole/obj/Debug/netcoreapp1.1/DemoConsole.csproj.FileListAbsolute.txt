@@ -9,3 +9,14 @@ d:\documents\visual studio 2017\Projects\NeuronFramework\DemoConsole\obj\Debug\n
 d:\documents\visual studio 2017\Projects\NeuronFramework\DemoConsole\obj\Debug\netcoreapp1.1\DemoConsole.AssemblyInfo.cs
 d:\documents\visual studio 2017\Projects\NeuronFramework\DemoConsole\obj\Debug\netcoreapp1.1\DemoConsole.dll
 d:\documents\visual studio 2017\Projects\NeuronFramework\DemoConsole\obj\Debug\netcoreapp1.1\DemoConsole.pdb
+D:\Documents\Visual Studio 2017\Projects\NeuronFramework\NeuronFramework\DemoConsole\bin\Debug\netcoreapp1.1\DemoConsole.deps.json
+D:\Documents\Visual Studio 2017\Projects\NeuronFramework\NeuronFramework\DemoConsole\bin\Debug\netcoreapp1.1\DemoConsole.runtimeconfig.json
+D:\Documents\Visual Studio 2017\Projects\NeuronFramework\NeuronFramework\DemoConsole\bin\Debug\netcoreapp1.1\DemoConsole.runtimeconfig.dev.json
+D:\Documents\Visual Studio 2017\Projects\NeuronFramework\NeuronFramework\DemoConsole\bin\Debug\netcoreapp1.1\DemoConsole.dll
+D:\Documents\Visual Studio 2017\Projects\NeuronFramework\NeuronFramework\DemoConsole\bin\Debug\netcoreapp1.1\DemoConsole.pdb
+D:\Documents\Visual Studio 2017\Projects\NeuronFramework\NeuronFramework\DemoConsole\bin\Debug\netcoreapp1.1\NNeuron.dll
+D:\Documents\Visual Studio 2017\Projects\NeuronFramework\NeuronFramework\DemoConsole\bin\Debug\netcoreapp1.1\NNeuron.pdb
+D:\Documents\Visual Studio 2017\Projects\NeuronFramework\NeuronFramework\DemoConsole\obj\Debug\netcoreapp1.1\DemoConsole.csprojResolveAssemblyReference.cache
+D:\Documents\Visual Studio 2017\Projects\NeuronFramework\NeuronFramework\DemoConsole\obj\Debug\netcoreapp1.1\DemoConsole.AssemblyInfo.cs
+D:\Documents\Visual Studio 2017\Projects\NeuronFramework\NeuronFramework\DemoConsole\obj\Debug\netcoreapp1.1\DemoConsole.dll
+D:\Documents\Visual Studio 2017\Projects\NeuronFramework\NeuronFramework\DemoConsole\obj\Debug\netcoreapp1.1\DemoConsole.pdb

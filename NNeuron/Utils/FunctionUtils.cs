@@ -41,5 +41,13 @@ namespace NNeuron.Utils
         {
             return (Math.Exp(x)- Math.Exp(-x)) / (Math.Exp(x) + Math.Exp(-x));
         }
+
+        //public static double[] SoftMax(double[] xs)
+        //{
+        //    var outputs = new List<double>();
+        //    foreach (var x in xs)
+        //    {
+        //    }
+        //}
     }
 }
