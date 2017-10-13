@@ -1,10 +1,10 @@
-﻿using NNeuron;
-using NNeuron.Algorithm;
-using NNeuron.ConcreteNetwork;
-using NNeuron.ConcreteTrainer;
-using NNeuron.OutputConverters;
-using NNeuron.Utils;
-using NNeuron.ValidationUtils;
+﻿using NNeuronFramework;
+using NNeuronFramework.Algorithm;
+using NNeuronFramework.ConcreteNetwork;
+using NNeuronFramework.ConcreteTrainer;
+using NNeuronFramework.OutputConverters;
+using NNeuronFramework.Utils;
+using NNeuronFramework.ValidationUtils;
 using System;
 using System.Collections.Generic;
 using System.Text;

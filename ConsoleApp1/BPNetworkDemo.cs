@@ -1,9 +1,9 @@
-﻿using NNeuron;
-using NNeuron.Algorithm;
-using NNeuron.ConcreteNetwork;
-using NNeuron.ConcreteTrainer;
-using NNeuron.OutputConverters;
-using NNeuron.ValidationUtils;
+﻿using NNeuronFramework;
+using NNeuronFramework.Algorithm;
+using NNeuronFramework.ConcreteNetwork;
+using NNeuronFramework.ConcreteTrainer;
+using NNeuronFramework.OutputConverters;
+using NNeuronFramework.ValidationUtils;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -72,8 +72,8 @@ namespace DemoConsole
             sb.AppendLine("y1=[" + sb_errors.ToString().TrimEnd(",".ToCharArray()) + "]");
             sb.AppendLine("plt.plot(x1,y1,'b^')");
             sb.AppendLine("plt.show()");
-
-            var file = System.IO.Path.Combine(AppContext.BaseDirectory, "display.py");
+            
+            var file = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "display.py");
             File.WriteAllText(file, sb.ToString());
             Console.WriteLine("saved to path: " + file);
 

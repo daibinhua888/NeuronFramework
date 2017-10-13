@@ -1,7 +1,7 @@
-﻿using NNeuron;
-using NNeuron.Algorithm;
-using NNeuron.ConcreteNetwork;
-using NNeuron.OutputConverters;
+﻿using NNeuronFramework;
+using NNeuronFramework.Algorithm;
+using NNeuronFramework.ConcreteNetwork;
+using NNeuronFramework.OutputConverters;
 using System;
 using System.Collections.Generic;
 using System.IO;
