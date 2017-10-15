@@ -4,7 +4,7 @@ using System.Text;
 using System.Linq;
 using NNeuronFramework.DL;
 
-namespace DemoConsole
+namespace ConsoleApp1
 {
     class DataGenerator
     {

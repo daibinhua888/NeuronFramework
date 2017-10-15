@@ -9,7 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace DemoConsole
+namespace ConsoleApp1
 {
     class PCADemo2
     {

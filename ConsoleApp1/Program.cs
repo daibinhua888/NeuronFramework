@@ -11,7 +11,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 
-namespace DemoConsole
+namespace ConsoleApp1
 {
     class Program
     {

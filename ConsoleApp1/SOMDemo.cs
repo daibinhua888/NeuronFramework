@@ -9,7 +9,7 @@ using System.Text;
 using System.Linq;
 using System.IO;
 
-namespace DemoConsole
+namespace ConsoleApp1
 {
     class SOMDemo
     {

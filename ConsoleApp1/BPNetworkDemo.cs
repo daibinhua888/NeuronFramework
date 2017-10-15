@@ -9,7 +9,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text;
 
-namespace DemoConsole
+namespace ConsoleApp1
 {
     class BPNetworkDemo
     {
