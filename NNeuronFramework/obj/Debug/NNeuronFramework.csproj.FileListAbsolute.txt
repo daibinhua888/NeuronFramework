@@ -2,4 +2,3 @@ D:\Documents\Visual Studio 2017\Projects\NeuronFramework\NeuronFramework\NNeuron
 D:\Documents\Visual Studio 2017\Projects\NeuronFramework\NeuronFramework\NNeuronFramework\bin\Debug\NNeuronFramework.pdb
 D:\Documents\Visual Studio 2017\Projects\NeuronFramework\NeuronFramework\NNeuronFramework\obj\Debug\NNeuronFramework.dll
 D:\Documents\Visual Studio 2017\Projects\NeuronFramework\NeuronFramework\NNeuronFramework\obj\Debug\NNeuronFramework.pdb
-D:\Documents\Visual Studio 2017\Projects\NeuronFramework\NeuronFramework\NNeuronFramework\obj\Debug\NNeuronFramework.csprojResolveAssemblyReference.cache

@@ -1,6 +1,8 @@
-﻿using NNeuronFramework;
+﻿using ConsoleApp1;
+using NNeuronFramework;
 using NNeuronFramework.Algorithm;
 using NNeuronFramework.ConcreteNetwork;
+using NNeuronFramework.DL;
 using NNeuronFramework.OutputConverters;
 using NNeuronFramework.Utils;
 using System;
@@ -20,9 +22,16 @@ namespace DemoConsole
             //PCADemo2.Demo();
             //SOMDemo.Demo();
 
-            double[] x = { 0.5, 0.3, 0.369};
-            var y = FunctionUtils.SoftMax(x);
-            Utils.DisplayListList(y.ToList());
+
+            DLDemo1.Demo();
+
+            //double[] x = { 0.5, 0.5 };
+            //var y = FunctionUtils.Softmax(x);
+            //Utils.DisplayListList(y.ToList());
+
+
+            //Matrix m = new Matrix(3, 3);
+            //m.Display();
 
             Console.ReadLine();
         }

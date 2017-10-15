@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Linq;
+using NNeuronFramework.DL;
 
 namespace DemoConsole
 {
@@ -141,6 +142,44 @@ namespace DemoConsole
             return dataset;
         }
 
+        public static Matrix[] GenerateDataSet5_1()
+        {
+            List<Matrix> lst = new List<Matrix>();
+
+            {
+                Matrix m = new Matrix(5, 5);
+                m.Data = ParseDoubles2Dim(@"
+                                                1,2,3,4,5
+                                                1,2,3,4,5
+                                                1,2,3,4,5
+                                                1,2,3,4,5
+                                                1,2,3,4,5
+");
+                lst.Add(m);
+            }
+
+            return lst.ToArray();
+        }
+        private static double[][] ParseDoubles2Dim(string s)
+        {
+            s = s.Trim();
+            s.Trim("\r".ToCharArray());
+            s.Trim("\n".ToCharArray());
+            s = s.Trim();
+
+            List<double[]> lst = new List<double[]>();
+
+            var lines = s.Split("\r\n".ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach(var line in lines)
+            {
+                var d=ParseDoubles(line.Trim());
+
+                lst.Add(d.ToArray());
+            }
+
+            return lst.ToArray();
+        }
+        
         private static List<double> ParseDoubles(string s)
         {
             s = s.TrimStart("\r\n".ToCharArray());

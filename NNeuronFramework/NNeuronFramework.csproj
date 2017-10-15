@@ -54,6 +54,16 @@
     <Compile Include="ConcreteTrainer\PCATrainer.cs" />
     <Compile Include="ConcreteTrainer\SOMSetting.cs" />
     <Compile Include="ConcreteTrainer\SOMTrainer.cs" />
+    <Compile Include="DL\BaseLayer.cs" />
+    <Compile Include="DL\ConvLayer.cs" />
+    <Compile Include="DL\FlattenLayer.cs" />
+    <Compile Include="DL\ILayer.cs" />
+    <Compile Include="DL\Kernel.cs" />
+    <Compile Include="DL\KernelFactory.cs" />
+    <Compile Include="DL\Matrix.cs" />
+    <Compile Include="DL\MinPoolLayer.cs" />
+    <Compile Include="DL\MaxPoolLayer.cs" />
+    <Compile Include="DL\Model.cs" />
     <Compile Include="HiddenLayer.cs" />
     <Compile Include="IAlgorithm.cs" />
     <Compile Include="InputLayer.cs" />
