@@ -9,6 +9,7 @@ namespace NNeuronFramework
     public enum ActivationFunction
     {
         LINEAR,
-        SIGMOID
+        SIGMOID,
+        TANH
     }
 }

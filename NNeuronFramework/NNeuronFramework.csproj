@@ -48,6 +48,8 @@
     <Compile Include="Algorithm\SOMNeighbor.cs" />
     <Compile Include="BaseLayer.cs" />
     <Compile Include="ConcreteNetwork\BPNetwork.cs" />
+    <Compile Include="ConcreteNetwork\Core\NeuronBlock.cs" />
+    <Compile Include="ConcreteNetwork\LSTMNetwork.cs" />
     <Compile Include="ConcreteNetwork\PCANetwork.cs" />
     <Compile Include="ConcreteNetwork\SOMNetwork.cs" />
     <Compile Include="ConcreteTrainer\BPTrainer.cs" />

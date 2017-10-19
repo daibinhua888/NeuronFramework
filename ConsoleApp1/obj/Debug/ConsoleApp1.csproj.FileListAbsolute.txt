@@ -6,3 +6,7 @@ D:\Documents\Visual Studio 2017\Projects\NeuronFramework\NeuronFramework\Console
 D:\Documents\Visual Studio 2017\Projects\NeuronFramework\NeuronFramework\ConsoleApp1\bin\Debug\NNeuronFramework.pdb
 D:\Documents\Visual Studio 2017\Projects\NeuronFramework\NeuronFramework\ConsoleApp1\obj\Debug\ConsoleApp1.exe
 D:\Documents\Visual Studio 2017\Projects\NeuronFramework\NeuronFramework\ConsoleApp1\obj\Debug\ConsoleApp1.pdb
+C:\Users\z\source\repos\NeuronFramework\ConsoleApp1\obj\Debug\ConsoleApp1.csprojResolveAssemblyReference.cache
+C:\Users\z\source\repos\NeuronFramework\ConsoleApp1\obj\Debug\ConsoleApp1.csproj.CoreCompileInputs.cache
+C:\Users\z\source\repos\NeuronFramework\ConsoleApp1\obj\Debug\ConsoleApp1.exe
+C:\Users\z\source\repos\NeuronFramework\ConsoleApp1\obj\Debug\ConsoleApp1.pdb
