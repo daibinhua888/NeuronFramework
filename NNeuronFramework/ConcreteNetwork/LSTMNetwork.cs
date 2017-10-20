@@ -1,4 +1,5 @@
 ﻿using NNeuronFramework.ConcreteNetwork.Core;
+using NNeuronFramework.ConcreteNetwork.Core.Operations;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,48 +10,56 @@ namespace NNeuronFramework.ConcreteNetwork
 {
     public class LSTMNetwork: NeuronNetwork
     {
+        private NetworkGraph graph;
+
+        public LSTMNetwork(NetworkGraph graph)
+        {
+            this.graph = graph;
+        }
+
         private LSTMNetwork() { }
 
         public static LSTMNetwork Create(int hiddenNeuronCount, int inputDim)
         {
             var graph = new NetworkGraph();
 
-            graph.DefineBlock("inputs", new NeuronBlock(inputDim));
+            graph.DefineBlock("inputs", new NeuronsBlock(inputDim));
 
-            graph.DefineBlock("previousH", new NeuronBlock(hiddenNeuronCount), CopyValueFrom= "h(t)");
-            graph.DefineBlock("previousC", new NeuronBlock(hiddenNeuronCount), CopyValueFrom = "c(t)_tanh");
+            graph.DefineBlock("previousH", new NeuronsBlock(hiddenNeuronCount), "h(t)");
+            graph.DefineBlock("previousC", new NeuronsBlock(hiddenNeuronCount), "c(t)_tanh");
 
-            graph.DefineBlock("f_gate_W", new NeuronBlock(hiddenNeuronCount));
-            graph.DefineBlock("f_gate_U", new NeuronBlock(hiddenNeuronCount));
+            graph.DefineBlock("f_gate_W", new NeuronsBlock(hiddenNeuronCount));
+            graph.DefineBlock("f_gate_U", new NeuronsBlock(hiddenNeuronCount));
 
-            graph.DefineBlock("i_gate_W", new NeuronBlock(hiddenNeuronCount));
-            graph.DefineBlock("i_gate_U", new NeuronBlock(hiddenNeuronCount));
+            graph.DefineBlock("i_gate_W", new NeuronsBlock(hiddenNeuronCount));
+            graph.DefineBlock("i_gate_U", new NeuronsBlock(hiddenNeuronCount));
 
-            graph.DefineBlock("o_gate_W", new NeuronBlock(hiddenNeuronCount));
-            graph.DefineBlock("o_gate_U", new NeuronBlock(hiddenNeuronCount));
+            graph.DefineBlock("o_gate_W", new NeuronsBlock(hiddenNeuronCount));
+            graph.DefineBlock("o_gate_U", new NeuronsBlock(hiddenNeuronCount));
 
-            graph.DefineBlock("c_gate_W", new NeuronBlock(hiddenNeuronCount));
-            graph.DefineBlock("c_gate_U", new NeuronBlock(hiddenNeuronCount));            
+            graph.DefineBlock("c_gate_W", new NeuronsBlock(hiddenNeuronCount));
+            graph.DefineBlock("c_gate_U", new NeuronsBlock(hiddenNeuronCount));            
 
-            graph.DefineBlock("+", new AddOperation());
-            graph.DefineBlock("*", new MultiplyOperation());
-            graph.DefineBlock("sigmoid", new SigmoidOperation());
-            graph.DefineBlock("tanh", new TanhOperation());
+            graph.DefineOperation("+", new AddOperation());
+            graph.DefineOperation("*", new MultiplyOperation());
+            graph.DefineOperation("sigmoid", new SigmoidOperation());
+            graph.DefineOperation("tanh", new TanhOperation());
+            graph.DefineOperation("fc", new FullConnectionOperation());
 
-            graph.DefineFullConnection("inputs", "f_gate_W");
-            graph.DefineFullConnection("inputs", "i_gate_W");
-            graph.DefineFullConnection("inputs", "o_gate_W");
-            graph.DefineFullConnection("inputs", "c_gate_W");
+            graph.AddFlow("f_gate_W_fc_out", new string[] { "inputs", "f_gate_W" }, new string[] { "fc" });
+            graph.AddFlow("i_gate_W_fc_out", new string[] { "inputs", "i_gate_W" }, new string[] { "fc" });
+            graph.AddFlow("o_gate_W_fc_out", new string[] { "inputs", "o_gate_W" }, new string[] { "fc" });
+            graph.AddFlow("c_gate_W_fc_out", new string[] { "inputs", "c_gate_W" }, new string[] { "fc" });
 
-            graph.DefineFullConnection("previousH", "f_gate_U");
-            graph.DefineFullConnection("previousH", "i_gate_U");
-            graph.DefineFullConnection("previousH", "o_gate_U");
-            graph.DefineFullConnection("previousH", "c_gate_U");
+            graph.AddFlow("f_gate_U_fc_out", new string[] { "previousH", "f_gate_U" }, new string[] { "fc" });
+            graph.AddFlow("i_gate_U_fc_out", new string[] { "previousH", "i_gate_U" }, new string[] { "fc" });
+            graph.AddFlow("o_gate_U_fc_out", new string[] { "previousH", "o_gate_U" }, new string[] { "fc" });
+            graph.AddFlow("c_gate_U_fc_out", new string[] { "previousH", "c_gate_U" }, new string[] { "fc" });
 
-            graph.AddFlow("f_value", new string[] { "f_gate_W", "f_gate_U" }, new string[] { "+", "sigmoid" });
-            graph.AddFlow("i_value", new string[] { "i_gate_W", "i_gate_U" }, new string[] { "+", "sigmoid" });
-            graph.AddFlow("o_value", new string[] { "o_gate_W", "o_gate_U" }, new string[] { "+", "sigmoid" });
-            graph.AddFlow("c~_value", new string[] { "c_gate_W", "c_gate_U" }, new string[] { "+", "tanh" });
+            graph.AddFlow("f_value", new string[] { "f_gate_W_fc_out", "f_gate_U_fc_out" }, new string[] { "+", "sigmoid" });
+            graph.AddFlow("i_value", new string[] { "i_gate_W_fc_out", "i_gate_U_fc_out" }, new string[] { "+", "sigmoid" });
+            graph.AddFlow("o_value", new string[] { "o_gate_W_fc_out", "o_gate_U_fc_out" }, new string[] { "+", "sigmoid" });
+            graph.AddFlow("c~_value", new string[] { "c_gate_W_fc_out", "c_gate_U_fc_out" }, new string[] { "+", "tanh" });
 
             graph.AddFlow("f_c_value", new string[] { "f_value", "previousC" }, new string[] {"*" });
             graph.AddFlow("i_c~_value", new string[] { "i_value", "c~_value" }, new string[] { "*" });
@@ -59,7 +68,7 @@ namespace NNeuronFramework.ConcreteNetwork
 
             graph.AddFlow("h(t)", new string[] { "c(t)_tanh", "o_value" }, new string[] { "*" });
 
-            graph.Validate();
+            graph.Compile();
 
             LSTMNetwork network = new LSTMNetwork(graph);
 

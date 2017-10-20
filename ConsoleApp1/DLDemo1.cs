@@ -1,5 +1,4 @@
-﻿using DemoConsole;
-using NNeuronFramework.DL;
+﻿using NNeuronFramework.DL;
 using System;
 using System.Collections.Generic;
 using System.Linq;
