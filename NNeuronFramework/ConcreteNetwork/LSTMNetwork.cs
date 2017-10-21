@@ -12,6 +12,11 @@ namespace NNeuronFramework.ConcreteNetwork
     {
         private NetworkGraph graph;
 
+        public void DisplayByDot()
+        {
+            this.graph.Display();
+        }
+
         public LSTMNetwork(NetworkGraph graph)
         {
             this.graph = graph;
@@ -23,50 +28,49 @@ namespace NNeuronFramework.ConcreteNetwork
         {
             var graph = new NetworkGraph();
 
-            graph.DefineBlock("inputs", new NeuronsBlock(inputDim));
+            var inputs =graph.Block("inputs", new NeuronsBlock(inputDim), "", true);
+            var previousH=graph.Block("previousH", new NeuronsBlock(hiddenNeuronCount), "ht", true);
+            var previousC=graph.Block("previousC", new NeuronsBlock(hiddenNeuronCount), "ct_tanh", true);
 
-            graph.DefineBlock("previousH", new NeuronsBlock(hiddenNeuronCount), "h(t)");
-            graph.DefineBlock("previousC", new NeuronsBlock(hiddenNeuronCount), "c(t)_tanh");
+            var f_gate_W = graph.Block("f_gate_W", new NeuronsBlock(hiddenNeuronCount));
+            var f_gate_U=graph.Block("f_gate_U", new NeuronsBlock(hiddenNeuronCount));
 
-            graph.DefineBlock("f_gate_W", new NeuronsBlock(hiddenNeuronCount));
-            graph.DefineBlock("f_gate_U", new NeuronsBlock(hiddenNeuronCount));
+            var i_gate_W=graph.Block("i_gate_W", new NeuronsBlock(hiddenNeuronCount));
+            var i_gate_U=graph.Block("i_gate_U", new NeuronsBlock(hiddenNeuronCount));
 
-            graph.DefineBlock("i_gate_W", new NeuronsBlock(hiddenNeuronCount));
-            graph.DefineBlock("i_gate_U", new NeuronsBlock(hiddenNeuronCount));
+            var o_gate_W=graph.Block("o_gate_W", new NeuronsBlock(hiddenNeuronCount));
+            var o_gate_U=graph.Block("o_gate_U", new NeuronsBlock(hiddenNeuronCount));
 
-            graph.DefineBlock("o_gate_W", new NeuronsBlock(hiddenNeuronCount));
-            graph.DefineBlock("o_gate_U", new NeuronsBlock(hiddenNeuronCount));
+            var c_gate_W=graph.Block("c_gate_W", new NeuronsBlock(hiddenNeuronCount));
+            var c_gate_U=graph.Block("c_gate_U", new NeuronsBlock(hiddenNeuronCount));
 
-            graph.DefineBlock("c_gate_W", new NeuronsBlock(hiddenNeuronCount));
-            graph.DefineBlock("c_gate_U", new NeuronsBlock(hiddenNeuronCount));            
+            var plus=graph.Operation("plus", new AddOperation());
+            var multiply=graph.Operation("multiply", new MultiplyOperation());
+            var sigmoid=graph.Operation("sigmoid", new SigmoidOperation());
+            var tanh=graph.Operation("tanh", new TanhOperation());
+            var fc=graph.Operation("fc", new FullConnectionOperation());
 
-            graph.DefineOperation("+", new AddOperation());
-            graph.DefineOperation("*", new MultiplyOperation());
-            graph.DefineOperation("sigmoid", new SigmoidOperation());
-            graph.DefineOperation("tanh", new TanhOperation());
-            graph.DefineOperation("fc", new FullConnectionOperation());
+            var f_gate_W_fc_out=graph.Connect("f_gate_W_fc_out", new GraphNode[] { inputs, f_gate_W }, new GraphNode[] { fc });
+            var i_gate_W_fc_out = graph.Connect("i_gate_W_fc_out", new GraphNode[] { inputs, i_gate_W }, new GraphNode[] { fc });
+            var o_gate_W_fc_out = graph.Connect("o_gate_W_fc_out", new GraphNode[] { inputs, o_gate_W }, new GraphNode[] { fc });
+            var c_gate_W_fc_out = graph.Connect("c_gate_W_fc_out", new GraphNode[] { inputs, c_gate_W }, new GraphNode[] { fc });
 
-            graph.AddFlow("f_gate_W_fc_out", new string[] { "inputs", "f_gate_W" }, new string[] { "fc" });
-            graph.AddFlow("i_gate_W_fc_out", new string[] { "inputs", "i_gate_W" }, new string[] { "fc" });
-            graph.AddFlow("o_gate_W_fc_out", new string[] { "inputs", "o_gate_W" }, new string[] { "fc" });
-            graph.AddFlow("c_gate_W_fc_out", new string[] { "inputs", "c_gate_W" }, new string[] { "fc" });
+            var f_gate_U_fc_out = graph.Connect("f_gate_U_fc_out", new GraphNode[] { previousH, f_gate_U }, new GraphNode[] { fc });
+            var i_gate_U_fc_out = graph.Connect("i_gate_U_fc_out", new GraphNode[] { previousH, i_gate_U }, new GraphNode[] { fc });
+            var o_gate_U_fc_out = graph.Connect("o_gate_U_fc_out", new GraphNode[] { previousH, o_gate_U }, new GraphNode[] { fc });
+            var c_gate_U_fc_out = graph.Connect("c_gate_U_fc_out", new GraphNode[] { previousH, c_gate_U }, new GraphNode[] { fc });
 
-            graph.AddFlow("f_gate_U_fc_out", new string[] { "previousH", "f_gate_U" }, new string[] { "fc" });
-            graph.AddFlow("i_gate_U_fc_out", new string[] { "previousH", "i_gate_U" }, new string[] { "fc" });
-            graph.AddFlow("o_gate_U_fc_out", new string[] { "previousH", "o_gate_U" }, new string[] { "fc" });
-            graph.AddFlow("c_gate_U_fc_out", new string[] { "previousH", "c_gate_U" }, new string[] { "fc" });
+            var f_value = graph.Connect("f_value", new GraphNode[] { f_gate_W_fc_out, f_gate_U_fc_out }, new GraphNode[] { plus, sigmoid });
+            var i_value = graph.Connect("i_value", new GraphNode[] { i_gate_W_fc_out, i_gate_U_fc_out }, new GraphNode[] { plus, sigmoid });
+            var o_value = graph.Connect("o_value", new GraphNode[] { o_gate_W_fc_out, o_gate_U_fc_out }, new GraphNode[] { plus, sigmoid });
+            var c1_value = graph.Connect("c1_value", new GraphNode[] { c_gate_W_fc_out, c_gate_U_fc_out }, new GraphNode[] { plus, tanh });
 
-            graph.AddFlow("f_value", new string[] { "f_gate_W_fc_out", "f_gate_U_fc_out" }, new string[] { "+", "sigmoid" });
-            graph.AddFlow("i_value", new string[] { "i_gate_W_fc_out", "i_gate_U_fc_out" }, new string[] { "+", "sigmoid" });
-            graph.AddFlow("o_value", new string[] { "o_gate_W_fc_out", "o_gate_U_fc_out" }, new string[] { "+", "sigmoid" });
-            graph.AddFlow("c~_value", new string[] { "c_gate_W_fc_out", "c_gate_U_fc_out" }, new string[] { "+", "tanh" });
+            var f_c_value = graph.Connect("f_c_value", new GraphNode[] { f_value, previousC }, new GraphNode[] {multiply });
+            var i_c1_value = graph.Connect("i_c1_value", new GraphNode[] { i_value, c1_value }, new GraphNode[] { multiply });
 
-            graph.AddFlow("f_c_value", new string[] { "f_value", "previousC" }, new string[] {"*" });
-            graph.AddFlow("i_c~_value", new string[] { "i_value", "c~_value" }, new string[] { "*" });
+            var ct_tanh = graph.Connect("ct_tanh", new GraphNode[] { f_c_value, i_c1_value }, new GraphNode[] { plus, tanh }, true);
 
-            graph.AddFlow("c(t)_tanh", new string[] { "f_c_value", "i_c~_value" }, new string[] { "+", "tanh" });
-
-            graph.AddFlow("h(t)", new string[] { "c(t)_tanh", "o_value" }, new string[] { "*" });
+            var ht = graph.Connect("ht", new GraphNode[] { ct_tanh, o_value }, new GraphNode[] { multiply }, true);
 
             graph.Compile();
 

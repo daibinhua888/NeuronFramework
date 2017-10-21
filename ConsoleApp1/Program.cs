@@ -22,8 +22,8 @@ namespace ConsoleApp1
             //PCADemo2.Demo();
             //SOMDemo.Demo();
 
-
-            DLDemo1.Demo();
+            //DLDemo1.Demo();
+            LSTMDemo.Demo();
 
             //double[] x = { 0.5, 0.5 };
             //var y = FunctionUtils.Softmax(x);

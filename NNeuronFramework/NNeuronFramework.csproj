@@ -48,7 +48,15 @@
     <Compile Include="Algorithm\SOMNeighbor.cs" />
     <Compile Include="BaseLayer.cs" />
     <Compile Include="ConcreteNetwork\BPNetwork.cs" />
+    <Compile Include="ConcreteNetwork\Core\Connection.cs" />
+    <Compile Include="ConcreteNetwork\Core\Descriptors\BlockDescriptor.cs" />
+    <Compile Include="ConcreteNetwork\Core\Descriptors\ConnectionDescriptor.cs" />
+    <Compile Include="ConcreteNetwork\Core\Descriptors\OperationDescriptor.cs" />
+    <Compile Include="ConcreteNetwork\Core\GraphNode.cs" />
+    <Compile Include="ConcreteNetwork\Core\GraphNodeConnector.cs" />
+    <Compile Include="ConcreteNetwork\Core\NodeType.cs" />
     <Compile Include="ConcreteNetwork\Core\Operations\AddOperation.cs" />
+    <Compile Include="ConcreteNetwork\Core\Operations\CopyOperation.cs" />
     <Compile Include="ConcreteNetwork\Core\Operations\FullConnectionOperation.cs" />
     <Compile Include="ConcreteNetwork\Core\Operations\MultiplyOperation.cs" />
     <Compile Include="ConcreteNetwork\Core\NetworkGraph.cs" />

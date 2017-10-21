@@ -45,6 +45,7 @@
     <Compile Include="BPNetworkDemo.cs" />
     <Compile Include="DataGenerator.cs" />
     <Compile Include="DLDemo1.cs" />
+    <Compile Include="LSTMDemo.cs" />
     <Compile Include="PCADemo2.cs" />
     <Compile Include="PCANetworkDemo.cs" />
     <Compile Include="Program.cs" />
