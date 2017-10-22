@@ -16,6 +16,10 @@ namespace NNeuronFramework.Utils
             double one = 1;
             return one / (one + System.Math.Exp(-x));
         }
+        public static double DSigmoid(double x)
+        {
+            return Sigmoid(x)*(1- Sigmoid(x));
+        }
 
         /// <summary>
         /// Softplus函数，Softplus函数是Logistic-Sigmoid函数原函数
@@ -40,6 +44,10 @@ namespace NNeuronFramework.Utils
         public static double Tanh(double x)
         {
             return (Math.Exp(x)- Math.Exp(-x)) / (Math.Exp(x) + Math.Exp(-x));
+        }
+        public static double DTanh(double x)
+        {
+            return 1 - Math.Pow(Tanh(x), 2);
         }
 
         public static double[] Softmax(double[] xs)
