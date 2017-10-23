@@ -15,6 +15,8 @@ namespace ConsoleApp1
 
             network.DisplayByDot();
 
+            network.Run();
+
         }
     }
 }

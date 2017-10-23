@@ -8,3 +8,4 @@ C:\Users\z\source\repos\NeuronFramework\NNeuronFramework\obj\Debug\NNeuronFramew
 C:\Users\z\source\repos\NeuronFramework\NNeuronFramework\obj\Debug\NNeuronFramework.csproj.CoreCompileInputs.cache
 C:\Users\z\source\repos\NeuronFramework\NNeuronFramework\obj\Debug\NNeuronFramework.dll
 C:\Users\z\source\repos\NeuronFramework\NNeuronFramework\obj\Debug\NNeuronFramework.pdb
+D:\Documents\Visual Studio 2017\Projects\NeuronFramework\NeuronFramework\NNeuronFramework\obj\Debug\NNeuronFramework.csprojResolveAssemblyReference.cache

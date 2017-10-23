@@ -54,6 +54,7 @@
     <Compile Include="ConcreteNetwork\Core\Descriptors\OperationDescriptor.cs" />
     <Compile Include="ConcreteNetwork\Core\GraphNode.cs" />
     <Compile Include="ConcreteNetwork\Core\GraphNodeConnector.cs" />
+    <Compile Include="ConcreteNetwork\Core\NetworkGraphExecutor.cs" />
     <Compile Include="ConcreteNetwork\Core\NodeType.cs" />
     <Compile Include="ConcreteNetwork\Core\Operations\AddOperation.cs" />
     <Compile Include="ConcreteNetwork\Core\Operations\CopyOperation.cs" />

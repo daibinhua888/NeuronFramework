@@ -14,28 +14,18 @@ namespace NNeuronFramework.ConcreteNetwork.Core
     {
         private List<GraphNode> savableNodes = new List<GraphNode>();
         private List<GraphNode> graphHeaders = new List<GraphNode>();
+        private NetworkGraphExecutor executor;
+
+        public void Execute()
+        {
+            executor.Execute();
+        }
+
+        private List<GraphNode> processingNodes = new List<GraphNode>();
 
         public void Compile()
         {
-            //graphHeaders.Clear();
-            //List<BlockDescriptor> startableBlockDescriptors = FindStartableBlockDescriptors();
-            //foreach (var b in startableBlockDescriptors)
-            //{
-            //    var graphNode = new GraphNode();
-
-            //    graphNode.Name = b.Name;
-            //    graphNode.Block = b.NeuronsBlock;
-            //    graphNode.NodeType = NodeType.Node;
-            //    graphNode.Operation = null;
-            //    graphNode.IsProcessed = false;
-            //    graphNode.CopyValueFrom = b.CopyValueFrom;
-
-            //    graphHeaders.Add(graphNode);
-            //}
-
-            //foreach (var headerNode in graphHeaders)
-            //{
-            //}
+            executor = new NetworkGraphExecutor(this.graphHeaders);
         }
 
         public void Display()
@@ -93,12 +83,23 @@ namespace NNeuronFramework.ConcreteNetwork.Core
 
             foreach (var n in nodes2Merge)
             {
-                var connector = new GraphNodeConnector();
+                {
+                    var connector = new GraphNodeConnector();
 
-                connector.Node = mergeNode;
-                connector.Operation = new CopyOperation();
+                    connector.Node = mergeNode;
+                    connector.Operation = new CopyOperation();
 
-                n.Nexts.Add(connector);
+                    n.Nexts.Add(connector);
+                }
+
+                {
+                    var connector = new GraphNodeConnector();
+
+                    connector.Node = n;
+                    connector.Operation = new CopyOperation();
+
+                    mergeNode.Previouses.Add(connector);
+                }
             }
 
             var lastNode = mergeNode;
@@ -113,12 +114,23 @@ namespace NNeuronFramework.ConcreteNetwork.Core
                 opGraphNode.NodeType = NodeType.SaveValueNode;
                 opGraphNode.Operation = null;
 
-                var c = new GraphNodeConnector();
+                {
+                    var connector = new GraphNodeConnector();
 
-                c.Node = opGraphNode;
-                c.Operation =nextOp.Operation;
+                    connector.Node = opGraphNode;
+                    connector.Operation = nextOp.Operation;
 
-                lastNode.Nexts.Add(c);
+                    lastNode.Nexts.Add(connector);
+                }
+
+                {
+                    var connector = new GraphNodeConnector();
+
+                    connector.Node = lastNode;
+                    connector.Operation = new CopyOperation();
+
+                    opGraphNode.Previouses.Add(connector);
+                }
 
                 lastNode = opGraphNode;
             }

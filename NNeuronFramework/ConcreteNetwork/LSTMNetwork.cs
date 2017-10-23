@@ -17,6 +17,11 @@ namespace NNeuronFramework.ConcreteNetwork
             this.graph.Display();
         }
 
+        public void Run()
+        {
+            graph.Execute();
+        }
+
         public LSTMNetwork(NetworkGraph graph)
         {
             this.graph = graph;

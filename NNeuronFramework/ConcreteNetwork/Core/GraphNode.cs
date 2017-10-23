@@ -12,6 +12,7 @@ namespace NNeuronFramework.ConcreteNetwork.Core
         public GraphNode()
         {
             this.Nexts = new List<GraphNodeConnector>();
+            this.Previouses = new List<GraphNodeConnector>();
             this.IsProcessed = false;
             this.CopyValueFrom = string.Empty;
             this.Name = Guid.NewGuid().ToString("N");
@@ -25,6 +26,8 @@ namespace NNeuronFramework.ConcreteNetwork.Core
         public string CopyValueFrom { get; set; }
         public string Name { get; internal set; }
         public List<GraphNodeConnector> Nexts { get; set; }
+        public List<GraphNodeConnector> Previouses { get; set; }
+
         public bool IsWalked { get; set; }
         public bool IsSavable { get; internal set; }
 
