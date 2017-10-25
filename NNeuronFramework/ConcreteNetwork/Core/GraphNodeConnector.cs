@@ -9,6 +9,7 @@ namespace NNeuronFramework.ConcreteNetwork.Core
 {
     public struct GraphNodeConnector
     {
+        public GraphNodeConnectorResult OperationResult { get; set; }
         public GraphNode Node{get;set;}
         public Operation Operation { get; set; }
     }

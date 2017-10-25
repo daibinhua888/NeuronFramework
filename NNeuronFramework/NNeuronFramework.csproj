@@ -31,6 +31,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
+    <Reference Include="System.configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -54,6 +55,7 @@
     <Compile Include="ConcreteNetwork\Core\Descriptors\OperationDescriptor.cs" />
     <Compile Include="ConcreteNetwork\Core\GraphNode.cs" />
     <Compile Include="ConcreteNetwork\Core\GraphNodeConnector.cs" />
+    <Compile Include="ConcreteNetwork\Core\GraphNodeConnectorResult.cs" />
     <Compile Include="ConcreteNetwork\Core\NetworkGraphExecutor.cs" />
     <Compile Include="ConcreteNetwork\Core\NodeType.cs" />
     <Compile Include="ConcreteNetwork\Core\Operations\AddOperation.cs" />
@@ -72,6 +74,7 @@
     <Compile Include="ConcreteTrainer\PCATrainer.cs" />
     <Compile Include="ConcreteTrainer\SOMSetting.cs" />
     <Compile Include="ConcreteTrainer\SOMTrainer.cs" />
+    <Compile Include="Configs\Settings.cs" />
     <Compile Include="DL\BaseLayer.cs" />
     <Compile Include="DL\ConvLayer.cs" />
     <Compile Include="DL\FlattenLayer.cs" />

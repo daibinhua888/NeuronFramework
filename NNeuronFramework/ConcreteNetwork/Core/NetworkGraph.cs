@@ -1,5 +1,6 @@
 ﻿using NNeuronFramework.ConcreteNetwork.Core.Descriptors;
 using NNeuronFramework.ConcreteNetwork.Core.Operations;
+using NNeuronFramework.Configs;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -14,6 +15,7 @@ namespace NNeuronFramework.ConcreteNetwork.Core
     {
         private List<GraphNode> savableNodes = new List<GraphNode>();
         private List<GraphNode> graphHeaders = new List<GraphNode>();
+        private List<GraphNode> allNodes = new List<GraphNode>();
         private NetworkGraphExecutor executor;
 
         public void Execute()
@@ -21,11 +23,9 @@ namespace NNeuronFramework.ConcreteNetwork.Core
             executor.Execute();
         }
 
-        private List<GraphNode> processingNodes = new List<GraphNode>();
-
         public void Compile()
         {
-            executor = new NetworkGraphExecutor(this.graphHeaders);
+            executor = new NetworkGraphExecutor(/*this.graphHeaders, */this.allNodes);
         }
 
         public void Display()
@@ -45,7 +45,7 @@ namespace NNeuronFramework.ConcreteNetwork.Core
             
             Process p = new Process();
             p.StartInfo.WorkingDirectory = AppDomain.CurrentDomain.BaseDirectory;
-            p.StartInfo.FileName = @"C:\Program Files (x86)\Graphviz2.38\bin\dot.exe";
+            p.StartInfo.FileName = Settings.DotExePath;
             p.StartInfo.Arguments = "-Tpng lstm.dot -o sample.png";
             p.StartInfo.CreateNoWindow = false;
             p.Start();
@@ -58,7 +58,7 @@ namespace NNeuronFramework.ConcreteNetwork.Core
             p.StartInfo.FileName = "sample.png";
             p.StartInfo.CreateNoWindow = false;
             p.Start();
-            p.WaitForExit();
+            //p.WaitForExit();
         }
 
         private List<string> ParseDirections()
@@ -83,11 +83,13 @@ namespace NNeuronFramework.ConcreteNetwork.Core
 
             foreach (var n in nodes2Merge)
             {
+                var resultPlaceHolder = new GraphNodeConnectorResult();
                 {
                     var connector = new GraphNodeConnector();
 
                     connector.Node = mergeNode;
                     connector.Operation = new CopyOperation();
+                    connector.OperationResult = resultPlaceHolder;
 
                     n.Nexts.Add(connector);
                 }
@@ -97,10 +99,13 @@ namespace NNeuronFramework.ConcreteNetwork.Core
 
                     connector.Node = n;
                     connector.Operation = new CopyOperation();
+                    connector.OperationResult = resultPlaceHolder;
 
                     mergeNode.Previouses.Add(connector);
                 }
             }
+
+            allNodes.Add(mergeNode);
 
             var lastNode = mergeNode;
 
@@ -114,11 +119,14 @@ namespace NNeuronFramework.ConcreteNetwork.Core
                 opGraphNode.NodeType = NodeType.SaveValueNode;
                 opGraphNode.Operation = null;
 
+                var resultPlaceHolder = new GraphNodeConnectorResult();
+
                 {
                     var connector = new GraphNodeConnector();
 
                     connector.Node = opGraphNode;
                     connector.Operation = nextOp.Operation;
+                    connector.OperationResult = resultPlaceHolder;
 
                     lastNode.Nexts.Add(connector);
                 }
@@ -128,11 +136,14 @@ namespace NNeuronFramework.ConcreteNetwork.Core
 
                     connector.Node = lastNode;
                     connector.Operation = new CopyOperation();
+                    connector.OperationResult = resultPlaceHolder;
 
                     opGraphNode.Previouses.Add(connector);
                 }
 
                 lastNode = opGraphNode;
+
+                allNodes.Add(lastNode);
             }
 
             lastNode.Name = name;
@@ -161,6 +172,8 @@ namespace NNeuronFramework.ConcreteNetwork.Core
             if (isSavable)
                 savableNodes.Add(node);
 
+            allNodes.Add(node);
+
             return node;
         }
 
@@ -174,6 +187,8 @@ namespace NNeuronFramework.ConcreteNetwork.Core
             node.Operation = operation;
             node.IsProcessed = false;
             node.CopyValueFrom = string.Empty;
+
+            allNodes.Add(node);
 
             return node;
         }

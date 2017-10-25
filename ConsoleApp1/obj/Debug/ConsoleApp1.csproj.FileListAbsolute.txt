@@ -10,3 +10,8 @@ C:\Users\z\source\repos\NeuronFramework\ConsoleApp1\obj\Debug\ConsoleApp1.csproj
 C:\Users\z\source\repos\NeuronFramework\ConsoleApp1\obj\Debug\ConsoleApp1.csproj.CoreCompileInputs.cache
 C:\Users\z\source\repos\NeuronFramework\ConsoleApp1\obj\Debug\ConsoleApp1.exe
 C:\Users\z\source\repos\NeuronFramework\ConsoleApp1\obj\Debug\ConsoleApp1.pdb
+C:\Users\z\source\repos\NeuronFramework\ConsoleApp1\bin\Debug\ConsoleApp1.exe.config
+C:\Users\z\source\repos\NeuronFramework\ConsoleApp1\bin\Debug\ConsoleApp1.exe
+C:\Users\z\source\repos\NeuronFramework\ConsoleApp1\bin\Debug\ConsoleApp1.pdb
+C:\Users\z\source\repos\NeuronFramework\ConsoleApp1\bin\Debug\NNeuronFramework.dll
+C:\Users\z\source\repos\NeuronFramework\ConsoleApp1\bin\Debug\NNeuronFramework.pdb
