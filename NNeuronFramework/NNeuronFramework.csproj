@@ -49,6 +49,17 @@
     <Compile Include="Algorithm\SOMNeighbor.cs" />
     <Compile Include="BaseLayer.cs" />
     <Compile Include="ConcreteNetwork\BPNetwork.cs" />
+    <Compile Include="ConcreteNetwork\Core\ComputeGraph\ComputeGraphExecutor.cs" />
+    <Compile Include="ConcreteNetwork\Core\ComputeGraph\PlusNode.cs" />
+    <Compile Include="ConcreteNetwork\Core\ComputeGraph\BaseComputeGraphNode.cs" />
+    <Compile Include="ConcreteNetwork\Core\ComputeGraph\ComputeGraph.cs" />
+    <Compile Include="ConcreteNetwork\Core\ComputeGraph\CopyValueFromNode.cs" />
+    <Compile Include="ConcreteNetwork\Core\ComputeGraph\FCNode.cs" />
+    <Compile Include="ConcreteNetwork\Core\ComputeGraph\GraphNodeContext.cs" />
+    <Compile Include="ConcreteNetwork\Core\ComputeGraph\InputNode.cs" />
+    <Compile Include="ConcreteNetwork\Core\ComputeGraph\MultiplyNode.cs" />
+    <Compile Include="ConcreteNetwork\Core\ComputeGraph\SigmoidNode.cs" />
+    <Compile Include="ConcreteNetwork\Core\ComputeGraph\TanhNode.cs" />
     <Compile Include="ConcreteNetwork\Core\Connection.cs" />
     <Compile Include="ConcreteNetwork\Core\Descriptors\BlockDescriptor.cs" />
     <Compile Include="ConcreteNetwork\Core\Descriptors\ConnectionDescriptor.cs" />

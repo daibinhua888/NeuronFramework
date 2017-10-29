@@ -11,13 +11,14 @@ namespace ConsoleApp1
     {
         public static void Demo()
         {
-            LSTMNetwork network = LSTMNetwork.Create(32, 5);
+            LSTMNetwork network = LSTMNetwork.Create2(32, 5);
 
-            network.DisplayByDot();
+            network.DisplayByDot2();
 
-            double[] inputs = new double[] {1,2,3,4,5 };
+            Dictionary<string, double[]> inputs = new Dictionary<string, double[]>();
+            inputs.Add("inputs", new double[] { 1, 2, 3, 4, 5 });
 
-            network.Run(inputs);
+            network.Run2(inputs);
 
         }
     }
