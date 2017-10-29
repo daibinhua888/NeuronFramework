@@ -16,15 +16,29 @@ namespace NNeuronFramework.ConcreteNetwork.Core
         private List<GraphNode> savableNodes = new List<GraphNode>();
         private List<GraphNode> graphHeaders = new List<GraphNode>();
         private List<GraphNode> allNodes = new List<GraphNode>();
+        
         private NetworkGraphExecutor executor;
 
-        public void Execute()
+        public void Execute(double[] inputs)
         {
-            executor.Execute();
+            executor.Execute(inputs);
         }
 
         public void Compile()
         {
+            foreach (var node in this.allNodes)
+            {
+                if (string.IsNullOrEmpty(node.CopyValueFrom))
+                    continue;
+
+                List<double> rndValues = new List<double>();
+
+                for (var index = 0; index < node.InputsCount; index++)
+                    rndValues.Add(Utils.Utils.GenerateRandomValue());
+
+                node.Value = rndValues.ToArray();
+            }
+
             executor = new NetworkGraphExecutor(/*this.graphHeaders, */this.allNodes);
         }
 
@@ -42,7 +56,7 @@ namespace NNeuronFramework.ConcreteNetwork.Core
             string filePath = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "lstm.dot");
 
             File.WriteAllText(filePath, sb.ToString());
-            
+
             Process p = new Process();
             p.StartInfo.WorkingDirectory = AppDomain.CurrentDomain.BaseDirectory;
             p.StartInfo.FileName = Settings.DotExePath;
@@ -58,7 +72,6 @@ namespace NNeuronFramework.ConcreteNetwork.Core
             p.StartInfo.FileName = "sample.png";
             p.StartInfo.CreateNoWindow = false;
             p.Start();
-            //p.WaitForExit();
         }
 
         private List<string> ParseDirections()
@@ -74,72 +87,64 @@ namespace NNeuronFramework.ConcreteNetwork.Core
             foreach (var node in graphHeaders)
                 lst.Add(string.Format("\"{0}\"[color=lightblue]", node.Name));
 
+            foreach (var node in allNodes)
+                if(!graphHeaders.Contains(node))
+                    if (node.Value!=null)
+                        lst.Add(string.Format("\"{0}\"[color=yellow]", node.Name));
+
             return lst;
         }
 
         public GraphNode Connect(string name, GraphNode[] nodes2Merge, GraphNode[] nextOps, bool isSavable = false)
         {
-            GraphNode mergeNode = new GraphNode();
+            GraphNode lastNode = null;
 
-            foreach (var n in nodes2Merge)
+            bool isFCNeurons = false;
+            if (nodes2Merge.Length == 2)
             {
-                var resultPlaceHolder = new GraphNodeConnectorResult();
+                var neuron = nodes2Merge.ToList().Find(o => o.NodeType == NodeType.NeuronsLayer);
+                var input = nodes2Merge.ToList().Find(o => o.NodeType != NodeType.NeuronsLayer);
+
+                if (neuron != null)
                 {
-                    var connector = new GraphNodeConnector();
-
-                    connector.Node = mergeNode;
-                    connector.Operation = new CopyOperation();
-                    connector.OperationResult = resultPlaceHolder;
-
-                    n.Nexts.Add(connector);
-                }
-
-                {
-                    var connector = new GraphNodeConnector();
-
-                    connector.Node = n;
-                    connector.Operation = new CopyOperation();
-                    connector.OperationResult = resultPlaceHolder;
-
-                    mergeNode.Previouses.Add(connector);
+                    SetConnection(input, neuron, new CopyOperation());
+                    isFCNeurons = true;
+                    lastNode = neuron;
                 }
             }
 
-            allNodes.Add(mergeNode);
+            if (!isFCNeurons)
+            {
+                GraphNode mergeNode = new GraphNode();
 
-            var lastNode = mergeNode;
+                foreach (var n in nodes2Merge)
+                {
+                    SetConnection(n, mergeNode, new CopyOperation());
+                }
+                lastNode = mergeNode;
+                allNodes.Add(mergeNode);
+            }
 
             foreach (var nextOp in nextOps)
             {
                 var opGraphNode = new GraphNode();
-                opGraphNode.Block = nextOp.Block;
                 opGraphNode.CopyValueFrom = nextOp.CopyValueFrom;
                 opGraphNode.IsProcessed = nextOp.IsProcessed;
                 opGraphNode.Name = Guid.NewGuid().ToString("N");
-                opGraphNode.NodeType = NodeType.SaveValueNode;
+                opGraphNode.NodeType = nextOp.NodeType;
                 opGraphNode.Operation = null;
+                opGraphNode.Value = nextOp.Value;
 
-                var resultPlaceHolder = new GraphNodeConnectorResult();
+                SetConnection(lastNode, opGraphNode, nextOp.Operation);
 
+                //判断是否FC，需要初始化，根据输入节点
+                if (nextOp.Operation.GetType() == typeof(FullConnectionOperation))
                 {
-                    var connector = new GraphNodeConnector();
-
-                    connector.Node = opGraphNode;
-                    connector.Operation = nextOp.Operation;
-                    connector.OperationResult = resultPlaceHolder;
-
-                    lastNode.Nexts.Add(connector);
+                    //全连接操作，预先进行初始化权重
+                    lastNode.IsWeightsNode = true;
+                    lastNode.RandomizeWeights();
                 }
 
-                {
-                    var connector = new GraphNodeConnector();
-
-                    connector.Node = lastNode;
-                    connector.Operation = new CopyOperation();
-                    connector.OperationResult = resultPlaceHolder;
-
-                    opGraphNode.Previouses.Add(connector);
-                }
 
                 lastNode = opGraphNode;
 
@@ -147,6 +152,7 @@ namespace NNeuronFramework.ConcreteNetwork.Core
             }
 
             lastNode.Name = name;
+            lastNode.IsTempNode = false;
 
             if (isSavable)
                 savableNodes.Add(lastNode);
@@ -154,17 +160,21 @@ namespace NNeuronFramework.ConcreteNetwork.Core
             return lastNode;
         }
 
-        public GraphNode Block(string name, NeuronsBlock neuronsBlock, string copyValueFrom="", bool isStartable=false, bool isSavable=false)
+        
+
+        public GraphNode Block(string name, int parameterCount, string copyValueFrom="", bool isStartable=false, bool isSavable=false, bool isRandomizeInit=false)
         {
             GraphNode node = new GraphNode();
 
             node.Name = name;
-            node.Block = neuronsBlock;
-            node.NodeType = NodeType.BlockNode;
+            node.IsTempNode = false;
+            node.NodeType = NodeType.SaveValueNode;
             node.Operation = null;
             node.IsProcessed = false;
             node.CopyValueFrom = copyValueFrom;
             node.IsSavable = isSavable;
+            node.IsStartable = isStartable;
+            node.InputsCount = parameterCount;
 
             if (isStartable)
                 graphHeaders.Add(node);
@@ -177,12 +187,31 @@ namespace NNeuronFramework.ConcreteNetwork.Core
             return node;
         }
 
+        public GraphNode NeuronLayer(string name, int neuronCount)
+        {
+            GraphNode node = new GraphNode();
+
+            node.Name = name;
+            node.IsTempNode = false;
+            node.NodeType = NodeType.NeuronsLayer;
+            node.Operation = null;
+            node.IsProcessed = false;
+            node.CopyValueFrom = string.Empty;
+            node.IsSavable = true;
+            node.IsStartable = false;
+            node.NeuronsCount = neuronCount;
+
+            allNodes.Add(node);
+
+            return node;
+        }
+
         public GraphNode Operation(string opName, Operation operation)
         {
             GraphNode node = new GraphNode();
 
             node.Name = opName;
-            node.Block = null;
+            node.IsTempNode = false;
             node.NodeType = NodeType.Operation;
             node.Operation = operation;
             node.IsProcessed = false;
@@ -191,6 +220,31 @@ namespace NNeuronFramework.ConcreteNetwork.Core
             allNodes.Add(node);
 
             return node;
+        }
+
+        private void SetConnection(GraphNode node1, GraphNode node2, Operation op)
+        {
+            var resultPlaceHolder = new GraphNodeConnectorResult();
+
+            {
+                var connector = new GraphNodeConnector();
+
+                connector.Node = node2;
+                connector.Operation = op;
+                connector.OperationResult = resultPlaceHolder;
+
+                node1.Nexts.Add(connector);
+            }
+
+            {
+                var connector = new GraphNodeConnector();
+
+                connector.Node = node1;
+                connector.Operation = op;
+                connector.OperationResult = resultPlaceHolder;
+
+                node2.Previouses.Add(connector);
+            }
         }
     }
 }

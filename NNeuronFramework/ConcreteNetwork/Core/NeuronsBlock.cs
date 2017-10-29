@@ -8,14 +8,19 @@ namespace NNeuronFramework.ConcreteNetwork.Core
 {
     public class NeuronsBlock
     {
-        private int neronsCount;
+        public int neronsCount;
+        public List<double> weights = new List<double>();
+        public double b;
+
         public NeuronsBlock(int neronsCount)
         {
             this.neronsCount = neronsCount;
-        }
 
-        private List<Neuron> neurons = new List<Neuron>();
-        private NeuronB b = new NeuronB();
+            for (var i = 0; i < neronsCount; i++)
+                this.weights.Add(Utils.Utils.GenerateRandomValue());
+
+            b = Utils.Utils.GenerateRandomValue();
+        }
         
     }
 }

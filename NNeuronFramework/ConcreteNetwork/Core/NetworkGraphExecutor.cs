@@ -8,62 +8,53 @@ namespace NNeuronFramework.ConcreteNetwork.Core
 {
     public class NetworkGraphExecutor
     {
-        //private List<GraphNode> graphHeaders;
-        //private List<GraphNode> processingNodes;
-        //private List<GraphNode> processedNodes=new List<GraphNode>();
-        //private List<GraphNode> nextProcesseNodes = new List<GraphNode>();
         private List<GraphNode> allNodes;
 
-        public NetworkGraphExecutor(/*List<GraphNode> graphHeaders, */List<GraphNode> allNodes)
+        public NetworkGraphExecutor(List<GraphNode> allNodes)
         {
-            //this.graphHeaders = graphHeaders;
-            //this.processingNodes = new List<GraphNode>();
             this.allNodes = allNodes;
         }
 
-        public void Execute()
+        public void Execute(double[] inputs)
         {
+            SetInputs2Node(inputs);
+
             allNodes.ForEach(n => n.IsProcessed = false);
             allNodes.ForEach(n => n.IsWalked = false);
             allNodes.ForEach(n => {
                 n.Nexts.ForEach(next=> 
                 {
-                    next.OperationResult = null;
+                    next.OperationResult.Data = null;
                 });
             });
 
-            //processingNodes.AddRange(this.graphHeaders);
-
             while (HasUnProcessedNodes())
             {
-                //processedNodes.Clear();
-                //nextProcesseNodes.Clear();
-
                 foreach (var node in this.allNodes)
                 {
                     VisitNode(node);
                 }
+            }
 
-                //处理节点信息
-                //      remove processedNodes from processingNodes
-                //      add nextProcesseNodes to processingNodes
-                //processRemove:
-                //for (var i = 0; i < this.processingNodes.Count; i++)
-                //{
-                //    bool found = false;
+            OutputSaveValueNodes();
+        }
 
-                //    foreach (var n in this.processedNodes)
-                //        if (this.processingNodes[i] == n)
-                //            found = true;
+        private void OutputSaveValueNodes()
+        {
+            var saveNodes = this.allNodes.Where(n=>n.IsMonitoringNode);
+            foreach (var node in saveNodes)
+            {
+                Console.Write(node.Name+"==>");
+                Utils.Utils.DisplayListList(node.Value.ToList());
+            }
+        }
 
-                //    if (found)
-                //    {
-                //        this.processingNodes.Remove(this.processingNodes[i]);
-                //        goto processRemove;
-                //    }
-                //}
-
-                //processingNodes.AddRange(nextProcesseNodes);
+        private void SetInputs2Node(double[] inputs)
+        {
+            foreach (var n in this.allNodes)
+            {
+                if (n.IsStartable && n.Name == "inputs")//后续修改
+                    n.Value = inputs;
             }
         }
 
@@ -81,29 +72,65 @@ namespace NNeuronFramework.ConcreteNetwork.Core
             if (!IsAllIncomingOK(node))
                 return;
 
-            ProcessOP_And_Push_To_Nexts(node);
+            bool all_processed=ProcessOP_And_Push_To_Nexts(node);
 
-            node.IsProcessed = true;
-            node.IsWalked = true;
+            if (all_processed)
+            {
+                node.IsProcessed = true;
+                node.IsWalked = true;
+            }
         }
         
-        private void ProcessOP_And_Push_To_Nexts(GraphNode node)
+        private bool ProcessOP_And_Push_To_Nexts(GraphNode node)
         {
+            List<double[]> input_data = new List<double[]>();
+            if (node.Value!=null&& node.Value.Length>0)
+            {
+                input_data.Add(node.Value);//设置初始值
+            }
+            else
+            {
+                foreach (var nc in node.Previouses)
+                {
+                    if (nc.OperationResult.Data == null)
+                        return false;
+
+                    input_data.Add(nc.OperationResult.Data as double[]);
+                }
+            }
             //将当前node的DATA和各个nexts的op进行计算，保存在connection上
 
             //执行某些计算，先忽略，占位
-            Console.WriteLine(string.Format("{1}({0})", node.NodeType.ToString(), node.Name));
+            if (node.NodeType == NodeType.SaveValueNode)
+            {
+                node.OutputValue = input_data;
+                //Console.WriteLine(string.Format("{1}({0})", node.NodeType.ToString(), node.Name));
+            }
 
-            for(var i=0;i<node.Nexts.Count;i++)
+            if(input_data.Count>0)
+                node.Value = input_data.First().ToArray();
+
+            for (var i=0;i<node.Nexts.Count;i++)
             {
                 var n = node.Nexts[i];
 
-                n.OperationResult.Data = "some result";
+                double[] result = n.Operation.Calc(node, input_data);
+
+                n.OperationResult.Data = result;
             }
+
+            return true;
         }
 
         private bool IsAllIncomingOK(GraphNode node)
         {
+            if (node.Value != null && node.Value.Length > 0)
+                return true;
+            //if (node.IsStartable&&node.Value!=null)   //是输入节点，则直接返回准备好状态
+            //    return true;
+            //if (node.IsRandomizeInit && node.Value != null)   //是权重节点，则直接返回准备好状态
+            //    return true;
+
             int hasResultCount = 0;
 
             foreach (var c in node.Previouses)

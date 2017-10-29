@@ -44,5 +44,11 @@ namespace NNeuronFramework.Utils
             }
             Console.WriteLine();
         }
+
+        internal static void DisplayListList(List<double[]> outputValue)
+        {
+            foreach (var x in outputValue)
+                DisplayListList(x.ToList());
+        }
     }
 }

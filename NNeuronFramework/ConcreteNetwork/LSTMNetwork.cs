@@ -16,10 +16,10 @@ namespace NNeuronFramework.ConcreteNetwork
         {
             this.graph.Display();
         }
-
-        public void Run()
+        
+        public void Run(double[] inputs)
         {
-            graph.Execute();
+            graph.Execute(inputs);
         }
 
         public LSTMNetwork(NetworkGraph graph)
@@ -33,21 +33,21 @@ namespace NNeuronFramework.ConcreteNetwork
         {
             var graph = new NetworkGraph();
 
-            var inputs =graph.Block("inputs", new NeuronsBlock(inputDim), "", true);
-            var previousH=graph.Block("previousH", new NeuronsBlock(hiddenNeuronCount), "ht", true);
-            var previousC=graph.Block("previousC", new NeuronsBlock(hiddenNeuronCount), "ct_tanh", true);
+            var inputs =graph.Block("inputs", inputDim, "", true);
+            var previousH=graph.Block("previousH", hiddenNeuronCount, "ht", true);
+            var previousC=graph.Block("previousC", hiddenNeuronCount, "ct_tanh", true);
 
-            var f_gate_W = graph.Block("f_gate_W", new NeuronsBlock(hiddenNeuronCount));
-            var f_gate_U=graph.Block("f_gate_U", new NeuronsBlock(hiddenNeuronCount));
+            var f_gate_W = graph.NeuronLayer("f_gate_W", hiddenNeuronCount);
+            var f_gate_U=graph.NeuronLayer("f_gate_U", hiddenNeuronCount);
 
-            var i_gate_W=graph.Block("i_gate_W", new NeuronsBlock(hiddenNeuronCount));
-            var i_gate_U=graph.Block("i_gate_U", new NeuronsBlock(hiddenNeuronCount));
+            var i_gate_W=graph.NeuronLayer("i_gate_W", hiddenNeuronCount);
+            var i_gate_U=graph.NeuronLayer("i_gate_U", hiddenNeuronCount);
 
-            var o_gate_W=graph.Block("o_gate_W", new NeuronsBlock(hiddenNeuronCount));
-            var o_gate_U=graph.Block("o_gate_U", new NeuronsBlock(hiddenNeuronCount));
+            var o_gate_W=graph.NeuronLayer("o_gate_W", hiddenNeuronCount);
+            var o_gate_U=graph.NeuronLayer("o_gate_U", hiddenNeuronCount);
 
-            var c_gate_W=graph.Block("c_gate_W", new NeuronsBlock(hiddenNeuronCount));
-            var c_gate_U=graph.Block("c_gate_U", new NeuronsBlock(hiddenNeuronCount));
+            var c_gate_W=graph.NeuronLayer("c_gate_W", hiddenNeuronCount);
+            var c_gate_U=graph.NeuronLayer("c_gate_U", hiddenNeuronCount);
 
             var plus=graph.Operation("plus", new AddOperation());
             var multiply=graph.Operation("multiply", new MultiplyOperation());
@@ -76,6 +76,9 @@ namespace NNeuronFramework.ConcreteNetwork
             var ct_tanh = graph.Connect("ct_tanh", new GraphNode[] { f_c_value, i_c1_value }, new GraphNode[] { plus, tanh }, true);
 
             var ht = graph.Connect("ht", new GraphNode[] { ct_tanh, o_value }, new GraphNode[] { multiply }, true);
+
+            ct_tanh.IsMonitoringNode = true;
+            ht.IsMonitoringNode = true;
 
             graph.Compile();
 

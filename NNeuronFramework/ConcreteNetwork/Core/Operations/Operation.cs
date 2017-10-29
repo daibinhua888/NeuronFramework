@@ -8,5 +8,6 @@ namespace NNeuronFramework.ConcreteNetwork.Core.Operations
 {
     public abstract class Operation
     {
+        public abstract double[] Calc(GraphNode node, List<double[]> data);
     }
 }

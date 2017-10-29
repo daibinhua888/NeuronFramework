@@ -8,8 +8,8 @@ namespace NNeuronFramework.ConcreteNetwork.Core
 {
     public enum NodeType
     {
-        BlockNode,
         SaveValueNode,
+        NeuronsLayer,
         Operation
     }
 }
